@@ -13,6 +13,21 @@ In this project, you'll find:
 
 So you can see how SSO (single sign-on) works. In addition, you can check out the code and understand the logic behind the curtain.
 
+## Seeing them in action
+
+First you must update the universal login that represents the sandbox tenant. To do that you must issue the following:
+
+    docker-compose up apply-classic-page
+
+Now you can fire up the products! Let's say you'd like to see in action only products A and B:
+
+    docker-compose up product-a product-b
+
+Then you can access them through the following addresses:
+
+- Product A: http://localhost:8000
+- Product B: http://localhost:8001
+
 ## Important notice
 
 You may not see all the projects here as this is still work in progress.
