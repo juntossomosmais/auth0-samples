@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  apply-classic-page:
+    build:
+      context: ./custom-universal-login
+      dockerfile: Dockerfile
+    env_file: custom-universal-login/.env.development

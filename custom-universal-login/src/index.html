@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Universal Login</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script>
+        // This will store the configuration received by the Identity Provider!
+        var configurationFromProvider, paramsFromProvider, leeway
+        try {
+            configurationFromProvider = JSON.parse(decodeURIComponent(escape(window.atob("@@config@@"))))
+            configurationFromProvider.extraParams = configurationFromProvider.extraParams || {}
+            leeway = configurationFromProvider.internalOptions.leeway
+            if (leeway) {
+                const convertedLeeway = parseInt(leeway)
+                if (!isNaN(convertedLeeway)) {
+                    configurationFromProvider.internalOptions.leeway = convertedLeeway
+                }
+            }
+            paramsFromProvider = Object.assign(
+                {
+                    overrides: {
+                        __tenant: configurationFromProvider.auth0Tenant,
+                        __token_issuer: configurationFromProvider.authorizationServer.issuer,
+                    },
+                    domain: configurationFromProvider.auth0Domain,
+                    clientID: configurationFromProvider.clientID,
+                    redirectUri: configurationFromProvider.callbackURL,
+                    responseType: "code",
+                },
+                configurationFromProvider.internalOptions
+            )
+        } catch (exception) {
+            console.error("The configuration value hasn't been provided!", exception.stack)
+        }
+    </script>
+
+</head>
+<body>
+
+<div id="app"></div>
+<script type="module" src="index.js"></script>
+
+</body>
+</html>

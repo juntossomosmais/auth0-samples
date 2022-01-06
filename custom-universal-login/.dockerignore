@@ -1,0 +1,9 @@
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+*
+!scripts
+!src
+!package.json
+!package-lock.json
+!Pipfile
+!Pipfile.lock
+!manage.py
