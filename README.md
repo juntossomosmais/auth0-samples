@@ -25,8 +25,12 @@ Now you can fire up the products! Let's say you'd like to see in action only pro
 
 Then you can access them through the following addresses:
 
-- Product A: http://localhost:8000
-- Product B: http://localhost:8001
+- Product A: http://app.local:8000
+- Product B: http://app.local:8001
+
+## Why app.local instead of localhost?
+
+[To skip user consent](https://community.auth0.com/t/skip-user-consent-when-using-social-connection/18061) when doing authorization code grant type. You can test it using `localhost`, but you should understand it upfront from us.
 
 ## Important notice
 
