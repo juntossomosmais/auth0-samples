@@ -19,6 +19,10 @@ First you must update the universal login that represents the sandbox tenant. To
 
     docker-compose up apply-classic-page
 
+Then update all the `env.development` files in the products. Do this with the following command:
+
+    docker-compose up update-settings
+
 Now you can fire up the products! Let's say you'd like to see in action only products A and B:
 
     docker-compose up product-a product-b

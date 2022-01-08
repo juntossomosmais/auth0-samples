@@ -6,3 +6,11 @@ services:
       context: ./custom-universal-login
       dockerfile: Dockerfile
     env_file: custom-universal-login/.env.development
+  update-settings:
+    build:
+      context: ./orchestrator
+      dockerfile: Dockerfile
+    env_file: orchestrator/.env.development
+    volumes:
+      # Will add more as soon as they're available
+      - ./product-a-regular-web-app:/app/product-a

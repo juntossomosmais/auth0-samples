@@ -1,0 +1,6 @@
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+*
+!orchestrator
+!Pipfile
+!Pipfile.lock
+!manage.py
