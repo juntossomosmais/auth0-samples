@@ -14,3 +14,9 @@ services:
     volumes:
       # Will add more as soon as they're available
       - ./product-a-regular-web-app:/app/product-a
+  product-a:
+    build:
+      context: product-a-regular-web-app
+    env_file: product-a-regular-web-app/.env.development
+    ports:
+      - "8000:8000"

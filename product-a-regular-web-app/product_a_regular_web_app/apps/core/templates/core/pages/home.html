@@ -1,0 +1,23 @@
+{% extends "core/templates/base.html" %}
+
+{% block content %}
+
+    <main>
+        <h2>Here's the home page!</h2>
+        {% if 'user' in request.session %}
+            <p>You are <strong>{{ request.session.user.name }}</strong>!</p>
+            <p>Your ID is <strong>{{ request.session.user.sub }}</strong>!</p>
+
+            <button class="btn-see-your-data">Click here to see your data through USERINFO endpoint!</button>
+
+            {% include "core/components/profile.html" %}
+            {% if suggested_users and suggested_users|length > 0 %}
+                {% include "core/components/same_accounts.html" %}
+            {% endif %}
+            {% include "core/components/linked_accounts.html" %}
+        {% else %}
+            <p>I know nothing about you. Log in first!</p>
+        {% endif %}
+    </main>
+
+{% endblock %}

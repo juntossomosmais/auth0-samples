@@ -1,0 +1,53 @@
+<div class="card">
+    <h5 class="card-header">Linked accounts</h5>
+    <div class="card-body">
+        {% if user_details.identities and user_details.identities|length > 1 %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">provider</th>
+                    <th scope="col">id</th>
+                    <th scope="col">connection</th>
+                    <th scope="col">picture</th>
+                    <th scope="col">profile data</th>
+                    <th scope="col">actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for identity in user_details.identities %}
+                    {% with identity.provider|add:'|'|add:identity.user_id as user_id_with_provider %}
+                        {% if user_id_with_provider != request.session.user.sub %}
+                            <tr>
+                                <td>{{ identity.provider }}</td>
+                                <td>{{ identity.user_id }}</td>
+                                <td>{{ identity.connection }}</td>
+                                <td>
+                                    {% if identity.profileData and identity.profileData.picture %}
+                                        <img src="{{ identity.profileData.picture }}" class="img-fluid"
+                                             alt="{{ identity.user_id }}'s picture" width="50px"/>
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <pre>{{ identity.profileData }}</pre>
+                                </td>
+                                <td>
+                                    <form method="post" action="{% url 'unlink-account' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger mb-3">Unlink account</button>
+                                        <input type="hidden" name="targetProvider" value="{{ identity.provider }}">
+                                        <input type="hidden" name="targetUserId" value="{{ identity.user_id }}">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="card-text">You don't have any accounts linked.</p>
+        {% endif %}
+    </div>
+</div>

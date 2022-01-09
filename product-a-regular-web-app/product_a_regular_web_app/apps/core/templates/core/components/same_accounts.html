@@ -1,0 +1,45 @@
+<div class="card">
+    <h5 class="card-header">Accounts with the same email address</h5>
+    <div class="card-body">
+        <p class="card-text">We noticed there are other registered users with same verified e-mail
+            address: {{ user_details.email }}. Do you want to link the accounts and merge its metadata?</p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">user_id</th>
+                <th scope="col">name</th>
+                <th scope="col">picture</th>
+                <th scope="col">user_metadata</th>
+                <th scope="col">app_metadata</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for suggested_user in suggested_users %}
+                <tr>
+                    <td>{{ suggested_user.user_id }}</td>
+                    <td>{{ suggested_user.name }}</td>
+                    <td><img src="{{ suggested_user.picture }}" class="img-fluid"
+                             alt="{{ suggested_user.name }}'s picture" width="50px"/></td>
+                    <td>
+                        <pre>{{ suggested_user.user_metadata }}</pre>
+                    </td>
+                    <td>
+                        <pre>{{ suggested_user.app_metadata }}</pre>
+                    </td>
+                    <td>
+                        <form method="post" action="{% url 'link-account' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary mb-3">Link account</button>
+                            <input type="hidden" name="userId" value="{{ suggested_user.user_id }}">
+                            <input type="hidden" name="email" value="{{ suggested_user.email }}">
+                            <input type="hidden" name="connection" value="{{ suggested_user.identities.0.connection }}">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
