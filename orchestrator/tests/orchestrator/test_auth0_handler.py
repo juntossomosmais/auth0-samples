@@ -131,7 +131,227 @@ class ManagementAPITests(unittest.TestCase):
         assert client_details["allowed_logout_urls"] == allowed_logout_urls
         assert client_details["grant_types"] == grant_types
 
-    # @unittest.SkipTest
+    def test_should_retrieve_all_connection(self):
+        # Arrange
+        fields = ["id", "strategy", "name"]
+        fields = None
+        # Act
+        result = management_api.retrieve_all_connection(fields=fields)
+        # Assert
+        assert result == [
+            {
+                "id": "con_kqz7rscXZMuYWqR1",
+                "strategy": "facebook",
+                "name": "facebook",
+                "is_domain_connection": False,
+            },
+            {
+                "id": "con_G4Ai9I9DZv8LIxTd",
+                "strategy": "google-oauth2",
+                "name": "google-oauth2",
+                "is_domain_connection": False,
+            },
+            {
+                "id": "con_XOxbqfMx6XVMBQvu",
+                "strategy": "auth0",
+                "name": "Username-Password-Authentication",
+                "is_domain_connection": False,
+            },
+            {
+                "id": "con_cGZluuxhzsqnZZEe",
+                "options": {
+                    "name": "email",
+                    "totp": {"length": 6, "time_step": 180},
+                    "email": {
+                        "body": '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml">\n  <head>\n    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    <style type="text/css">.ExternalClass,.ExternalClass div,.ExternalClass font,.ExternalClass p,.ExternalClass span,.ExternalClass td,img{line-height:100%}#outlook a{padding:0}.ExternalClass,.ReadMsgBody{width:100%}a,blockquote,body,li,p,table,td{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}table,td{mso-table-lspace:0;mso-table-rspace:0}img{-ms-interpolation-mode:bicubic;border:0;height:auto;outline:0;text-decoration:none}table{border-collapse:collapse!important}#bodyCell,#bodyTable,body{height:100%!important;margin:0;padding:0;font-family:ProximaNova,sans-serif}#bodyCell{padding:20px}#bodyTable{width:600px}@font-face{font-family:ProximaNova;src:url(https://cdn.auth0.com/fonts/proxima-nova/proximanova-regular-webfont-webfont.eot);src:url(https://cdn.auth0.com/fonts/proxima-nova/proximanova-regular-webfont-webfont.eot?#iefix) format(\'embedded-opentype\'),url(https://cdn.auth0.com/fonts/proxima-nova/proximanova-regular-webfont-webfont.woff) format(\'woff\');font-weight:400;font-style:normal}@font-face{font-family:ProximaNova;src:url(https://cdn.auth0.com/fonts/proxima-nova/proximanova-semibold-webfont-webfont.eot);src:url(https://cdn.auth0.com/fonts/proxima-nova/proximanova-semibold-webfont-webfont.eot?#iefix) format(\'embedded-opentype\'),url(https://cdn.auth0.com/fonts/proxima-nova/proximanova-semibold-webfont-webfont.woff) format(\'woff\');font-weight:600;font-style:normal}@media only screen and (max-width:480px){#bodyTable,body{width:100%!important}a,blockquote,body,li,p,table,td{-webkit-text-size-adjust:none!important}body{min-width:100%!important}#bodyTable{max-width:600px!important}#signIn{max-width:280px!important}}\n</style>\n  </head>\n  <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;margin: 0;padding: 0;font-family: &quot;ProximaNova&quot;, sans-serif;height: 100% !important;"><center>\n  <table style="width: 600px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 0;font-family: &quot;ProximaNova&quot;, sans-serif;border-collapse: collapse !important;height: 100% !important;" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">\n    <tr>\n      <td align="center" valign="top" id="bodyCell" style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 20px;font-family: &quot;ProximaNova&quot;, sans-serif;height: 100% !important;">\n      <div class="main">\n        <p style="text-align: center;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%; margin-bottom: 30px;">\n          <img src="https://cdn.auth0.com/styleguide/2.0.9/lib/logos/img/badge.png" width="50" alt="Your logo goes here" style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;">\n        </p>\n\n        <!-- Email change content -->\n        {% if operation == \'change_email\' %}\n\n          <p style="font-size: 1.2em;line-height: 1.3;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">Your email address has been updated.</p>\n\n        {% else %}\n\n          <!-- Signup email content -->\n          {% if send == \'link\' or send == \'link_ios\' or send == \'link_android\' %}\n\n            <p style="font-size: 1.2em;line-height: 1.3;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">Click and confirm that you want to sign in to {{ application.name }}. This link will expire in three minutes.</p>\n\n            <div style="text-align:center">\n            <a id="signIn" style="text-transform: uppercase;letter-spacing: 1px;color: #ffffff;text-decoration: none;display: inline-block;min-height: 48px;line-height: 48px;padding-top: 0;padding-right: 26px;padding-bottom: 0;margin: 20px 0;padding-left: 26px;border: 0;outline: 0;background: #eb5424;font-size: 14px;font-style: normal;font-weight: 400;text-align: center;white-space: nowrap;border-radius: 3px;text-overflow: ellipsis;max-width: 280px;overflow: hidden;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" href="{{ link }}">Sign in to {{ application.name }}</a>\n            </div>\n\n            <p style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">Or sign in using this link:</p>\n            <p style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;"><a style="font-size: 12px; color: #A9B3BC; text-decoration: none;word-break: break-all;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;" href="{{ link }}">{{ link }}</a></p>\n\n            {% elsif send == \'code\' %}\n\n            <p style="font-size: 1.4em; line-height: 1.3;">Your verification code is: <b>{{ code }}</b></p>\n\n          {% endif %}\n\n        {% endif %}\n\n        <p style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">If you are having any issues with your account, please don\'t hesitate to contact us by replying to this mail.</p>\n\n        <br>\n        Thanks!\n        <br>\n\n        <strong>{{ application.name }}</strong>\n\n        <br><br>\n        <hr style="border: 2px solid #EAEEF3; border-bottom: 0; margin: 20px 0;">\n        <p style="text-align: center;color: #A9B3BC;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">\n          If you did not make this request, please contact us by replying to this mail.\n        </p>\n      </div>\n      </td>\n    </tr>\n  </table>\n</center>\n</body>\n</html>',
+                        "from": "{{ application.name }} <root@auth0.com>",
+                        "syntax": "liquid",
+                        "subject": "Welcome to {{ application.name }}",
+                    },
+                    "disable_signup": False,
+                    "brute_force_protection": True,
+                },
+                "strategy": "email",
+                "name": "email",
+                "is_domain_connection": False,
+                "realms": ["email"],
+                "enabled_clients": [],
+            },
+        ]
+        # Just leaving the thing below as an example!
+        # assert result == [
+        #     {
+        #         "id": "con_kqz7rscXZMuYWqR1",
+        #         "options": {
+        #             "email": True,
+        #             "scope": "email,public_profile",
+        #             "ads_read": False,
+        #             "client_id": "",
+        #             "user_link": False,
+        #             "user_likes": False,
+        #             "user_posts": False,
+        #             "read_stream": False,
+        #             "user_events": False,
+        #             "user_gender": False,
+        #             "user_groups": False,
+        #             "user_photos": False,
+        #             "user_status": False,
+        #             "user_videos": False,
+        #             "manage_pages": False,
+        #             "read_mailbox": False,
+        #             "user_friends": False,
+        #             "publish_pages": False,
+        #             "publish_video": False,
+        #             "read_insights": False,
+        #             "user_birthday": False,
+        #             "user_hometown": False,
+        #             "user_location": False,
+        #             "ads_management": False,
+        #             "public_profile": True,
+        #             "user_age_range": False,
+        #             "leads_retrieval": False,
+        #             "pages_messaging": False,
+        #             "pages_show_list": False,
+        #             "publish_actions": False,
+        #             "pages_manage_cta": False,
+        #             "publish_to_groups": False,
+        #             "user_tagged_places": False,
+        #             "business_management": False,
+        #             "read_page_mailboxes": False,
+        #             "user_managed_groups": False,
+        #             "manage_notifications": False,
+        #             "groups_access_member_info": False,
+        #             "allow_context_profile_field": False,
+        #             "pages_messaging_phone_number": False,
+        #             "pages_manage_instant_articles": False,
+        #             "pages_messaging_subscriptions": False,
+        #             "read_audience_network_insights": False,
+        #         },
+        #         "strategy": "facebook",
+        #         "name": "facebook",
+        #         "is_domain_connection": False,
+        #         "realms": ["facebook"],
+        #         "enabled_clients": [],
+        #     },
+        #     {
+        #         "id": "con_G4Ai9I9DZv8LIxTd",
+        #         "options": {"email": True, "scope": ["email", "profile"], "profile": True},
+        #         "strategy": "google-oauth2",
+        #         "name": "google-oauth2",
+        #         "is_domain_connection": False,
+        #         "realms": ["google-oauth2"],
+        #         "enabled_clients": ["CAR3cmoBtcNUbHYSHKEmPEUEUBSMs0RI", "wkKnt6BQmBtX6Pr2kfJNkMVfm6fh2s5U"],
+        #     },
+        #     {
+        #         "id": "con_XOxbqfMx6XVMBQvu",
+        #         "options": {
+        #             "mfa": {"active": True, "return_enroll_settings": True},
+        #             "passwordPolicy": "good",
+        #             "strategy_version": 2,
+        #             "brute_force_protection": True,
+        #         },
+        #         "strategy": "auth0",
+        #         "name": "Username-Password-Authentication",
+        #         "is_domain_connection": False,
+        #         "realms": ["Username-Password-Authentication"],
+        #         "enabled_clients": ["CAR3cmoBtcNUbHYSHKEmPEUEUBSMs0RI", "wkKnt6BQmBtX6Pr2kfJNkMVfm6fh2s5U"],
+        #     },
+        # ]
+
+    @unittest.SkipTest
+    def test_should_delete_connection(self):
+        # Arrange
+        connection_id = "con_cGZluuxhzsqnZZEe"
+        # Act
+        result = management_api.delete_connection(connection_id)
+        # Assert
+        assert result == {"deleted_at": "2022-01-09T19:40:22.603Z"}
+
+    @unittest.SkipTest
+    def test_should_create_connection_facebook(self):
+        # Arrange
+        name = "facebook"
+        strategy = "facebook"
+        # Act
+        result = management_api.create_connection(name, strategy)
+        # Assert
+        assert result == {
+            "id": "con_Srme57EQLLnrAdEC",
+            "options": {"email": True, "scope": "email,public_profile", "public_profile": True},
+            "strategy": "facebook",
+            "name": "facebook",
+            "is_domain_connection": False,
+            "enabled_clients": [],
+            "realms": ["facebook"],
+        }
+
+    @unittest.SkipTest
+    def test_should_create_connection_google(self):
+        # Arrange
+        name = "google-oauth2"
+        strategy = "google-oauth2"
+        enabled_clients = ["CAR3cmoBtcNUbHYSHKEmPEUEUBSMs0RI"]
+        # Act
+        result = management_api.create_connection(name, strategy, enabled_clients)
+        # Assert
+        assert result == {
+            "id": "con_7DDvBmb0szaP036j",
+            "options": {"email": True, "scope": ["email", "profile"], "profile": True},
+            "strategy": "google-oauth2",
+            "name": "google-oauth2",
+            "is_domain_connection": False,
+            "enabled_clients": ["CAR3cmoBtcNUbHYSHKEmPEUEUBSMs0RI"],
+            "realms": ["google-oauth2"],
+        }
+
+    @unittest.SkipTest
+    def test_retrieve_current_email_provider(self):
+        # Act
+        # If not e-mail provider has ever been configured, then None will be returned
+        result = management_api.current_email_provider()
+        # Assert
+        assert result == {
+            "enabled": False,
+            "default_from_address": "Não responda <juntosid-nao-responda@jsmais.com>",
+            "credentials": {
+                "smtp_host": "smtp.mailgun.org",
+                "smtp_port": 587,
+                "smtp_user": "juntosid-nao-responda@jsmais.com",
+            },
+        }
+
+    @unittest.SkipTest
+    def test_delete_current_email_provider(self):
+        # Act
+        result = management_api.delete_email_provider()
+        # Assert
+        assert result == ""
+
+    @unittest.SkipTest
+    def test_should_configure_email_provider(self):
+        # Arrange
+        arguments = {
+            "default_from_address": "Não responda <juntosid-nao-responda@jsmais.com>",
+            "smtp_host": "smtp.mailgun.org",
+            "smtp_port": 587,
+            "smtp_user": "juntosid-nao-responda@jsmais.com",
+            "smtp_pass": "YOUR_SMTP_PASSWORD",
+        }
+        # Act
+        result = management_api.configure_email_provider(**arguments)
+        # Assert
+        assert result == {
+            "name": "smtp",
+            "enabled": True,
+            "default_from_address": "Não responda <juntosid-nao-responda@jsmais.com>",
+            "credentials": {
+                "smtp_host": "smtp.mailgun.org",
+                "smtp_port": 587,
+                "smtp_user": "juntosid-nao-responda@jsmais.com",
+            },
+        }
+
+    @unittest.SkipTest
     def test_should_delete_clients(self):
         # Arrange
         clients = management_api.retrieve_all_clients()
@@ -145,3 +365,51 @@ class ManagementAPITests(unittest.TestCase):
             if client["name"].lower() == settings.PRODUCT_C_NAME.lower():
                 management_api.delete_client(client["client_id"])
                 continue
+
+    @unittest.SkipTest
+    def test_retrieve_all_client_grants(self):
+        # Act
+        result = management_api.retrieve_all_client_grants()
+        # Assert
+        assert result == [
+            {
+                "id": "cgr_99YBl1KhuQ2aI5He",
+                "client_id": "CAR3cmoBtcNUbHYSHKEmPEUEUBSMs0RI",
+                "audience": "https://jsm-sandbox-dev1.us.auth0.com/api/v2/",
+                "scope": [
+                    "read:client_grants",
+                    "update:client_grants",
+                    "read:users",
+                    "update:users",
+                    "read:clients",
+                    "update:clients",
+                    "delete:clients",
+                    "create:clients",
+                    "read:client_keys",
+                    "read:connections",
+                    "update:connections",
+                    "delete:connections",
+                    "create:connections",
+                    "read:email_provider",
+                    "update:email_provider",
+                    "delete:email_provider",
+                    "create:email_provider",
+                ],
+            }
+        ]
+
+    @unittest.SkipTest
+    def test_should_create_client_grant(self):
+        # Arrange
+        cliend_id = "fsC8VuacDnUu7l2hmg6kkmgPTXrWZEvQ"
+        audience = "https://jsm-sandbox-dev1.us.auth0.com/api/v2/"
+        scope = ["read:users", "update:users"]
+        # Act
+        result = management_api.create_client_grant(cliend_id, audience, scope)
+        # Assert
+        assert result == {
+            "id": "cgr_DUlVpNBGUrlGnLyW",
+            "client_id": "fsC8VuacDnUu7l2hmg6kkmgPTXrWZEvQ",
+            "audience": "https://jsm-sandbox-dev1.us.auth0.com/api/v2/",
+            "scope": ["read:users", "update:users"],
+        }
