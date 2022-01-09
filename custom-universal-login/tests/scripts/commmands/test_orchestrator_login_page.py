@@ -15,7 +15,7 @@ class HandlerTests(BaseTestCase):
     def test_should_retrieve_static_files(self):
         # Arrange comment: You must have created the out files from parcel! Run "npm run build" prior test execution
         # Act
-        static_files = retrieve_static_files("out", "login.*")
+        static_files = retrieve_static_files("out", "index.*")
         # Assert
         assert static_files.js_file
         assert static_files.css_file

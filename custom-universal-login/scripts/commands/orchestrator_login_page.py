@@ -2,6 +2,7 @@ import mimetypes
 import pathlib
 
 from dataclasses import dataclass
+from typing import Optional
 
 import boto3
 
@@ -17,7 +18,9 @@ BASE_DIR = pathlib.Path(__file__).resolve().parent.parent.parent
 class StaticFiles:
     html_file: pathlib.Path
     css_file: pathlib.Path
+    css_map_file: Optional[pathlib.Path]
     js_file: pathlib.Path
+    js_map_file: Optional[pathlib.Path]
 
 
 def retrieve_bucket(s3_resource, bucket_name):
@@ -47,7 +50,10 @@ def retrieve_buckets_cors(s3_resource, bucket_name):
 def upload_file(bucket, filename, blob_key):
     # Sample about how to check it:
     # curl -i https://my-honest-hosted-content-december-2021.s3.amazonaws.com/login.c20437d2.css
-    content_type = mimetypes.guess_type(blob_key)[0]
+    if blob_key.endswith(".map"):
+        content_type = "application/json"
+    else:
+        content_type = mimetypes.guess_type(blob_key)[0]
     extra_args = {
         "ACL": "public-read",
         "CacheControl": "public, max-age=31536000, immutable",
@@ -58,17 +64,23 @@ def upload_file(bucket, filename, blob_key):
 
 def retrieve_static_files(folder, glob_pattern) -> StaticFiles:
     files = pathlib.Path(f"{BASE_DIR}/{folder}").glob(glob_pattern)
-    js_file, css_file, html_file = None, None, None
+    js_file, js_map_file, css_file, css_map_file, html_file = None, None, None, None, None
 
     for file in files:
         if file.suffix == ".js":
             js_file = file
+            possible_map = pathlib.Path(f"{file}.map")
+            if possible_map.exists():
+                js_map_file = possible_map
         if file.suffix == ".css":
             css_file = file
+            possible_map = pathlib.Path(f"{file}.map")
+            if possible_map.exists():
+                css_map_file = possible_map
         if file.suffix == ".html":
             html_file = file
 
-    return StaticFiles(html_file, css_file, js_file)
+    return StaticFiles(html_file, css_file, css_map_file, js_file, js_map_file)
 
 
 def load_content_as_string(file_name) -> str:
@@ -87,8 +99,13 @@ def main():
     print(f"Configured static files: {static_files}")
     bucket = retrieve_bucket(s3, settings.BUCKET_NAME)
 
-    upload_file(bucket, str(static_files.css_file), f"{settings.BUCKET_ENVIRONMENT_PATH}/{static_files.css_file.name}")
-    upload_file(bucket, str(static_files.js_file), f"{settings.BUCKET_ENVIRONMENT_PATH}/{static_files.js_file.name}")
+    bucket_path = settings.BUCKET_ENVIRONMENT_PATH
+    upload_file(bucket, str(static_files.css_file), f"{bucket_path}/{static_files.css_file.name}")
+    if static_files.css_map_file:
+        upload_file(bucket, str(static_files.css_map_file), f"{bucket_path}/{static_files.css_map_file.name}")
+    upload_file(bucket, str(static_files.js_file), f"{bucket_path}/{static_files.js_file.name}")
+    if static_files.js_map_file:
+        upload_file(bucket, str(static_files.js_map_file), f"{bucket_path}/{static_files.js_map_file.name}")
     print(f"CSS and JS files have been uploaded")
 
     page_as_str = load_content_as_string(str(static_files.html_file))

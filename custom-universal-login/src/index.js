@@ -2,8 +2,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 // Required by React
 import ReactDOM from "react-dom"
-// To create fake images
-import "holderjs"
 // My application
 import { App } from "./App"
 
