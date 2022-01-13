@@ -29,8 +29,11 @@ def update_settings(file_location, client_details: ClientDetails):
         print(f"Updating settings for the following file: {file_location_path}")
         find_key_and_replace_for_value = {
             "SOCIAL_AUTH_AUTH0_KEY": client_details.client_id,
+            "Auth0__ClientId": client_details.client_id,
             "SOCIAL_AUTH_AUTH0_SECRET": client_details.client_secret,
+            "Auth0__ClientSecret": client_details.client_secret,
             "SOCIAL_AUTH_AUTH0_DOMAIN": f"{client_details.tenant}.us.auth0.com",
+            "Auth0__Domain": f"{client_details.tenant}.us.auth0.com",
         }
         refresh_settings(file_location_path, find_key_and_replace_for_value)
     else:
@@ -78,7 +81,7 @@ def main():
         print("Creating product B!")
         my_service_address = "app.local:8001"
         allowed_logout_urls = [f"https://{my_service_address}/"]
-        callbacks = [f"https://{my_service_address}/v1/auth/response-oidc"]
+        callbacks = [f"https://{my_service_address}/Account/Callback"]
         extra_options = {"allowed_logout_urls": allowed_logout_urls, "callbacks": callbacks}
         created_client = management_api.create_client(settings.PRODUCT_B_NAME, AppType.REGULAR_WEB, **extra_options)
         product_b_client = ClientDetails.build_from_raw_client(created_client)
