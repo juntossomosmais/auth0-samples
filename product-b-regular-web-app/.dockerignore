@@ -1,0 +1,8 @@
+# https://docs.docker.com/engine/reference/builder/#dockerignore-file
+*
+!src
+!tests
+**/bin
+**/obj
+!ProductBee.sln
+!scripts/start-web-development.sh
