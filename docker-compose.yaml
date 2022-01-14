@@ -21,3 +21,9 @@ services:
     env_file: product-a-regular-web-app/.env.development
     ports:
       - "8000:8000"
+  product-b:
+    build:
+      context: product-b-regular-web-app
+    env_file: product-b-regular-web-app/.env.development
+    ports:
+      - "8001:8001"
