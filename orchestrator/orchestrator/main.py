@@ -120,6 +120,7 @@ def main():
         management_api.configure_email_provider(**arguments)
 
     # Control variables
+    database_connection = "Username-Password-Authentication"
     google_connection = "google-oauth2"
     facebook_connection = "facebook"
     passwordless_email_connection = "email"
@@ -143,3 +144,12 @@ def main():
         management_api.update_connection_with_clients(google_connection_id, enabled_clients)
         management_api.update_connection_with_clients(facebook_connection_id, enabled_clients)
         management_api.update_connection_with_clients(passwordless_email_connection_id, enabled_clients)
+    # Update main connection if required to allow username usage
+    fields = ["id", "name", "strategy"]
+    connections = management_api.retrieve_all_connection(fields=fields, connection_name="auth0")
+    database_connection_id = retrieve_id_by_connection_name(connections, database_connection)
+    print(f"Allowing usage of username in {database_connection}...")
+    try:
+        management_api.update_connection_to_enable_username(database_connection_id, "auth0")
+    except Exception:
+        print("Could not configure database to allow username!")

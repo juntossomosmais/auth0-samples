@@ -305,6 +305,16 @@ class ManagementAPITests(unittest.TestCase):
         }
 
     @unittest.SkipTest
+    def test_should_refresh_connection_allow_username(self):
+        # Arrange
+        connection_id = "con_XOxbqfMx6XVMBQvu"
+        strategy = "auth0"
+        # Act
+        result = management_api.update_connection_to_enable_username(connection_id, strategy)
+        # Assert
+        assert result
+
+    @unittest.SkipTest
     def test_retrieve_current_email_provider(self):
         # Act
         # If not e-mail provider has ever been configured, then None will be returned

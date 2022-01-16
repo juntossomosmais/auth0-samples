@@ -218,6 +218,22 @@ class _ManagementAPI(object, metaclass=_BaseManagementAPIMetaClass):
         body = {"enabled_clients": enabled_clients}
         return self.auth0.connections.update(connection_id, body)
 
+    def update_connection_to_enable_username(self, connection_id: str, strategy: str):
+        # Finding all options
+        connections = self.retrieve_all_connection(connection_name=strategy, fields=["options", "id"])
+        connection_options = None
+        for connection in connections:
+            if connection["id"] == connection_id:
+                connection_options = connection["options"]
+        if not connection_options:
+            raise InvalidProvidedArgumentException
+        # Updating properties
+        connection_options["validation"] = {"username": {"max": 11, "min": 11}}
+        connection_options["requires_username"] = True
+        # Final object
+        body = {"options": connection_options}
+        return self.auth0.connections.update(connection_id, body)
+
     def retrieve_all_client_grants(self):
         return self.auth0.client_grants.all()
 
