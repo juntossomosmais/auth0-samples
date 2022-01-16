@@ -8,6 +8,7 @@ import { WebAuth } from "auth0-js"
 import { buildConfigurationFromEnvironmentToAuth0js } from "../../auth0/configuration-builder"
 import SocialLogins from "../SocialLogins"
 import RecoverPassword from "../RecoverPassword"
+import SignUp from "../SignUp"
 
 const UniversalLogin = () => {
   // Auth0
@@ -15,6 +16,7 @@ const UniversalLogin = () => {
   const webAuth = new WebAuth(config)
   // States
   const initialClassicUniversalLoginState = {
+    signUpForm: false,
     showChangePasswordForm: false,
     oneTimePasswordEnabled: false,
     buttonLoginStrategyFieldValue: "Receber chave de acesso rápido por email",
@@ -40,6 +42,13 @@ const UniversalLogin = () => {
       buttonLoginStrategyFieldValue: "Logar com senha",
     }))
   }
+  const signUpToggle = event => {
+    event.preventDefault()
+    setClassicUniversalLoginState(prevState => ({
+      ...prevState,
+      signUpForm: !classicUniversalLoginState.signUpForm,
+    }))
+  }
   // UI handling
   const standardUi = innerForm => {
     return (
@@ -48,7 +57,14 @@ const UniversalLogin = () => {
         <Card.Body>
           <Card.Title>Bem-vindo</Card.Title>
           <Card.Text>
-            Faça login na <strong>Rave of Phonetics</strong> e continue em nosso site.
+            Faça login na sua conta <strong>JuntosId</strong> e continue em nosso site.
+          </Card.Text>
+          <Card.Text>
+            Novo? Faça seu{" "}
+            <a href="#" onClick={signUpToggle}>
+              cadastro agora
+            </a>
+            .
           </Card.Text>
           <hr />
           {innerForm}
@@ -71,14 +87,48 @@ const UniversalLogin = () => {
       </S.CustomCard>
     )
   }
-
-  if (classicUniversalLoginState.showChangePasswordForm) {
-    return standardUi(<RecoverPassword auth0={webAuth} />)
+  const standardForSignUp = innerForm => {
+    return (
+      <S.CustomCard>
+        <Card.Img variant="top" src="holder.js/100px180?text=Your company" />
+        <Card.Body>
+          <Card.Title>Bem-vindo</Card.Title>
+          <Card.Text>
+            Faça sua conta <strong>JuntosId</strong> e continue em nosso site.
+          </Card.Text>
+          <Card.Text>
+            <a href="#" onClick={signUpToggle}>
+              Quer se autenticar?
+            </a>
+            .
+          </Card.Text>
+          <hr />
+          {innerForm}
+        </Card.Body>
+        <Card.Footer className="text-center">
+          Ao fazer cadastro/login, você concorda com nossa{" "}
+          <a
+            href="https://github.com/willianantunes/auth0-custom-universal-login-with-sample-app/blob/main/LICENSE"
+            target="blank"
+          >
+            política de privacidade
+          </a>
+        </Card.Footer>
+      </S.CustomCard>
+    )
   }
-  if (classicUniversalLoginState.oneTimePasswordEnabled) {
-    return standardUi(<OneTimePasswordLogin auth0={webAuth} />)
+
+  if (classicUniversalLoginState.signUpForm) {
+    return standardForSignUp(<SignUp auth0={webAuth} />)
   } else {
-    return standardUi(<DatabaseLogin auth0={webAuth} changePasswordHook={refreshToChangePasswordForm} />)
+    if (classicUniversalLoginState.showChangePasswordForm) {
+      return standardUi(<RecoverPassword auth0={webAuth} />)
+    }
+    if (classicUniversalLoginState.oneTimePasswordEnabled) {
+      return standardUi(<OneTimePasswordLogin auth0={webAuth} />)
+    } else {
+      return standardUi(<DatabaseLogin auth0={webAuth} changePasswordHook={refreshToChangePasswordForm} />)
+    }
   }
 }
 
