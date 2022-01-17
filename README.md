@@ -27,7 +27,7 @@ Then update all the `env.development` files in the products. Do this with the fo
 
 Now you can fire up the products! Let's say you'd like to see in action only products A and B:
 
-    docker-compose up product-a product-b
+    docker-compose build product-a product-b && docker-compose up product-a product-b 
 
 Then you can access them through the following addresses:
 
