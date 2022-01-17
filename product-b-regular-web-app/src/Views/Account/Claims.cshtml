@@ -1,16 +1,15 @@
 <div class="row">
     <div class="col-md-12">
-        <h3>Claims associated with current User</h3>
-        <p>This page displays all the claims associated the the current User. This is useful when debugging to see which claims are being populated from the Auth0 ID Token.</p>
-
+        <h1 class="display-9 fw-normal text-center">Veja o que está associado com o seu usuário.</h1>
+        @* <h3>Veja o que está associado com o seu usuário.</h3> *@
         <table class="table">
             <thead>
             <tr>
                 <th>
-                    Claim
+                    Chave
                 </th>
                 <th>
-                    Value
+                    Valor
                 </th>
             </tr>
             </thead>
@@ -24,5 +23,6 @@
             }
             </tbody>
         </table>
+        <p>Em termos técnicos, essa página mostra as claims associadas ao seu usuário. É útil para debugar quais claims estão populando seu ID Token.</p>
     </div>
 </div>
