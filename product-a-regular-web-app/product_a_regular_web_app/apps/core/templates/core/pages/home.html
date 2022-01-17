@@ -2,22 +2,27 @@
 
 {% block content %}
 
-    <main>
-        <h2>Here's the home page!</h2>
-        {% if 'user' in request.session %}
-            <p>You are <strong>{{ request.session.user.name }}</strong>!</p>
-            <p>Your ID is <strong>{{ request.session.user.sub }}</strong>!</p>
+    {% if 'user' in request.session %}
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4 fw-normal">Agora sabemos 😋</h1>
+            <p class="fs-5 text-muted"><strong>{{ request.session.user.name }} / {{ request.session.user.sub }}</strong>
+            </p>
+        </div>
 
-            <button class="btn-see-your-data">Click here to see your data through USERINFO endpoint!</button>
+        <div class="row center-align">
+        <button class="btn-see-your-data btn btn-light">Clique aqui e veja os dados do endpoint userinfo!</button>
+        </div>
 
-            {% include "core/components/profile.html" %}
-            {% if suggested_users and suggested_users|length > 0 %}
-                {% include "core/components/same_accounts.html" %}
-            {% endif %}
-            {% include "core/components/linked_accounts.html" %}
-        {% else %}
-            <p>I know nothing about you. Log in first!</p>
+        {% include "core/components/profile.html" %}
+        {% if suggested_users and suggested_users|length > 0 %}
+            {% include "core/components/same_accounts.html" %}
         {% endif %}
-    </main>
+        {% include "core/components/linked_accounts.html" %}
+    {% else %}
+        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+            <h1 class="display-4 fw-normal">Não sabemos quem é você 🥲</h1>
+            <p class="fs-5 text-muted">Se autentique e veja o se perfil!</p>
+        </div>
+    {% endif %}
 
 {% endblock %}

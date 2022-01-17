@@ -1,8 +1,8 @@
 <div class="card">
-    <h5 class="card-header">Accounts with the same email address</h5>
+    <h5 class="card-header">Contas com o mesmo endereço de e-mail</h5>
     <div class="card-body">
-        <p class="card-text">We noticed there are other registered users with same verified e-mail
-            address: {{ user_details.email }}. Do you want to link the accounts and merge its metadata?</p>
+        <p class="card-text">Notamos que existe outros usuários registrados com o mesmo e-mail verificado por você:
+            <strong>{{ user_details.email }}</strong>. Deseja vincular as contas junto com seus outros dados?</p>
 
         <table class="table">
             <thead>
@@ -31,7 +31,7 @@
                     <td>
                         <form method="post" action="{% url 'link-account' %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary mb-3">Link account</button>
+                            <button type="submit" class="btn btn-primary mb-3">Vincular conta</button>
                             <input type="hidden" name="userId" value="{{ suggested_user.user_id }}">
                             <input type="hidden" name="email" value="{{ suggested_user.email }}">
                             <input type="hidden" name="connection" value="{{ suggested_user.identities.0.connection }}">

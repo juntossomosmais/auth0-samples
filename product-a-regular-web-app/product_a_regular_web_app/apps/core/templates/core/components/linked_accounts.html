@@ -1,5 +1,7 @@
 <div class="card">
-    <h5 class="card-header">Linked accounts</h5>
+    <h5 class="card-header">Contas ligadas (<a
+            href="https://auth0.com/docs/manage-users/user-accounts/user-account-linking" target="_blank"
+            rel="noreferrer noopener">veja mais detalhes sobre</a>)</h5>
     <div class="card-body">
         {% if user_details.identities and user_details.identities|length > 1 %}
             <table class="table">
@@ -35,7 +37,7 @@
                                 <td>
                                     <form method="post" action="{% url 'unlink-account' %}">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger mb-3">Unlink account</button>
+                                        <button type="submit" class="btn btn-danger mb-3">Desvincular conta</button>
                                         <input type="hidden" name="targetProvider" value="{{ identity.provider }}">
                                         <input type="hidden" name="targetUserId" value="{{ identity.user_id }}">
                                     </form>
@@ -47,7 +49,7 @@
                 </tbody>
             </table>
         {% else %}
-            <p class="card-text">You don't have any accounts linked.</p>
+            <p class="card-text">Você não tem nenhuma conta vinculada.</p>
         {% endif %}
     </div>
 </div>
