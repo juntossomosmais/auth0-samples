@@ -38,7 +38,7 @@ const SocialLogins = ({ auth0 }) => {
   return (
     <Stack gap={3}>
       {socialLoginState.showError && <Alert variant="danger">{socialLoginState.errorMessage}</Alert>}
-      <Button variant="primary" onClick={initializeLoginWithGoogle}>
+      <Button variant="danger" onClick={initializeLoginWithGoogle}>
         <i className="bi bi-google" /> Entrar com o Google
       </Button>
       <Button variant="primary" onClick={initializeLoginWithFacebook}>

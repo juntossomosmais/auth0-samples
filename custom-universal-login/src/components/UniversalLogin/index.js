@@ -9,6 +9,7 @@ import { buildConfigurationFromEnvironmentToAuth0js } from "../../auth0/configur
 import SocialLogins from "../SocialLogins"
 import RecoverPassword from "../RecoverPassword"
 import SignUp from "../SignUp"
+import { ImageWrapper } from "./styled"
 
 const UniversalLogin = () => {
   // Auth0
@@ -50,10 +51,20 @@ const UniversalLogin = () => {
     }))
   }
   // UI handling
+  const FakeImage = () => {
+    return <Card.Img variant="top" src="holder.js/100px180?text=Your company" />
+  }
+  const JSMImage = () => {
+    return (
+      <S.ImageWrapper>
+        <Card.Img variant="top" src="https://assets-img.juntossomosmais.com.br/images/logo.svg" />
+      </S.ImageWrapper>
+    )
+  }
   const standardUi = innerForm => {
     return (
       <S.CustomCard>
-        <Card.Img variant="top" src="holder.js/100px180?text=Your company" />
+        <JSMImage />
         <Card.Body>
           <Card.Title>Bem-vindo</Card.Title>
           <Card.Text>
@@ -90,7 +101,7 @@ const UniversalLogin = () => {
   const standardForSignUp = innerForm => {
     return (
       <S.CustomCard>
-        <Card.Img variant="top" src="holder.js/100px180?text=Your company" />
+        <JSMImage />
         <Card.Body>
           <Card.Title>Bem-vindo</Card.Title>
           <Card.Text>
