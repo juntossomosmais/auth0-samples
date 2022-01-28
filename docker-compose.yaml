@@ -15,6 +15,7 @@ services:
       # Will add more as soon as they're available
       - ./product-a-regular-web-app:/app/product-a
       - ./product-b-regular-web-app:/app/product-b
+      - ./product-c-single-page-app:/app/product-c
   product-a:
     build:
       context: product-a-regular-web-app
@@ -27,3 +28,9 @@ services:
     env_file: product-b-regular-web-app/.env.development
     ports:
       - "8001:8001"
+  product-c:
+    build:
+      context: product-c-single-page-app
+    env_file: product-c-single-page-app/.env.development
+    ports:
+      - "8002:8002"
