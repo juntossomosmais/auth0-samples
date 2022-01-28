@@ -109,6 +109,8 @@ class _ManagementAPI(object, metaclass=_BaseManagementAPIMetaClass):
             body["grant_types"] = grant_types
         if jwt_configuration:
             body["jwt_configuration"] = jwt_configuration
+        if app_type == AppType.SPA:
+            body["token_endpoint_auth_method"] = "none"
 
         # https://auth0-python.readthedocs.io/en/latest/v3.management.html#auth0.v3.management.clients.Clients.create
         return self.auth0.clients.create(body)
