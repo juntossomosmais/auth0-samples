@@ -27,12 +27,13 @@ Then update all the `env.development` files in the products. Do this with the fo
 
 Now you can fire up the products! Let's say you'd like to see in action only products A and B:
 
-    docker-compose build product-a product-b && docker-compose up product-a product-b 
+    docker-compose build product-a product-b product-c && docker-compose up product-a product-b product-c 
 
 Then you can access them through the following addresses:
 
 - Product A: http://app.local:8000
 - Product B: http://app.local:8001
+- Product C: https://app.local:8002
 
 ## Why app.local instead of localhost?
 
