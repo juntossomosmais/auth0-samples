@@ -29,10 +29,13 @@ def update_settings(file_location, client_details: ClientDetails):
         print(f"Updating settings for the following file: {file_location_path}")
         find_key_and_replace_for_value = {
             "SOCIAL_AUTH_AUTH0_KEY": client_details.client_id,
+            "NEXT_PUBLIC_SOCIAL_AUTH_AUTH0_KEY": client_details.client_id,
             "Auth0__ClientId": client_details.client_id,
             "SOCIAL_AUTH_AUTH0_SECRET": client_details.client_secret,
+            "NEXT_PUBLIC_SOCIAL_AUTH_AUTH0_SECRET": client_details.client_secret,
             "Auth0__ClientSecret": client_details.client_secret,
             "SOCIAL_AUTH_AUTH0_DOMAIN": f"{client_details.tenant}.us.auth0.com",
+            "NEXT_PUBLIC_SOCIAL_AUTH_AUTH0_DOMAIN": f"{client_details.tenant}.us.auth0.com",
             "Auth0__Domain": f"{client_details.tenant}.us.auth0.com",
         }
         refresh_settings(file_location_path, find_key_and_replace_for_value)
@@ -93,6 +96,7 @@ def main():
             "allowed_logout_urls": configuration_for_all,
             "callbacks": configuration_for_all,
             "allowed_origins": configuration_for_all,
+            "web_origins": configuration_for_all,
         }
         created_client = management_api.create_client(settings.PRODUCT_C_NAME, AppType.SPA, **extra_options)
         product_c_client = ClientDetails.build_from_raw_client(created_client)
