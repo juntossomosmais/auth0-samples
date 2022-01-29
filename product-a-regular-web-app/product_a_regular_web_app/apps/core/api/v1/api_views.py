@@ -53,6 +53,8 @@ def handle_response_oidc(request: Request) -> Response:
 @api_view(["GET"])
 def retrieve_user_info(request: Request) -> Response:
     tokens = request.session.get("tokens")
-    result = OIDCProvider.get_user_info(tokens["access_token"])
+    access_token = tokens["access_token"]
+    logger.info("Using the following access token: %s", access_token)
+    result = OIDCProvider.get_user_info(access_token)
 
     return Response(data=result)
