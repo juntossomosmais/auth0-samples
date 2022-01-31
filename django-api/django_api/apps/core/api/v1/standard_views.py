@@ -31,7 +31,7 @@ class UserManagementAttributesAPIView(APIView):
         _logger.debug("The following user is trying to retrieve his attributes: %s", user_id)
         user_details = management_api.retrieve_user(user_id)
         body = {
-            "full_name": user_details.get("full_name"),
+            "full_name": user_details.get("name"),
             "given_name": user_details.get("given_name"),
             "family_name": user_details.get("family_name"),
             "user_metadata": user_details.get("user_metadata"),
