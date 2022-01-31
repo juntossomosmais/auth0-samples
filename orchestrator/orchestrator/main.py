@@ -95,8 +95,8 @@ def main():
     if not product_b_client:
         print("Creating product B!")
         my_service_address = "app.local:8001"
-        allowed_logout_urls = [f"https://{my_service_address}/"]
-        callbacks = [f"https://{my_service_address}/Account/Callback"]
+        allowed_logout_urls = [f"http://{my_service_address}/"]
+        callbacks = [f"http://{my_service_address}/Account/Callback"]
         extra_options = {"allowed_logout_urls": allowed_logout_urls, "callbacks": callbacks}
         created_client = management_api.create_client(settings.PRODUCT_B_NAME, AppType.REGULAR_WEB, **extra_options)
         product_b_client = ClientDetails.build_from_raw_client(created_client)
