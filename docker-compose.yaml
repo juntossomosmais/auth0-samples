@@ -16,6 +16,12 @@ services:
       - ./product-a-regular-web-app:/app/product-a
       - ./product-b-regular-web-app:/app/product-b
       - ./product-c-single-page-app:/app/product-c
+  django-api:
+    build:
+      context: django-api
+    env_file: django-api/.env.development
+    ports:
+      - "8010:8010"
   product-a:
     build:
       context: product-a-regular-web-app
