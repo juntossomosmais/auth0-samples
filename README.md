@@ -25,15 +25,18 @@ Then update all the `env.development` files in the products. Do this with the fo
 
     docker-compose build update-settings && docker-compose up update-settings
 
-Now you can fire up the products! Let's say you'd like to see in action only products A and B:
+Now you can fire up the products including the API!
 
-    docker-compose build product-a product-b product-c && docker-compose up product-a product-b product-c 
+    docker-compose build product-a product-b product-c django-api && docker-compose up product-a product-b product-c django-api 
 
 Then you can access them through the following addresses:
 
 - Product A: http://app.local:8000
 - Product B: http://app.local:8001
 - Product C: https://app.local:8002
+- Django API: https://app.local:8010/admin
+
+Use `admin:admin` to access Django ADMIN!
 
 ## Why app.local instead of localhost?
 
@@ -71,7 +74,11 @@ First you must create an application of type M2M and then grant access to certai
         "delete:email_provider",
         "create:email_provider",
         "read:grants",
-        "delete:grants"
+        "delete:grants",
+        "read:resource_servers",
+        "update:resource_servers",
+        "delete:resource_servers",
+        "create:resource_servers"
     ]
 }
 ```

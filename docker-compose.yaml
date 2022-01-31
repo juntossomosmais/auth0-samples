@@ -16,6 +16,7 @@ services:
       - ./product-a-regular-web-app:/app/product-a
       - ./product-b-regular-web-app:/app/product-b
       - ./product-c-single-page-app:/app/product-c
+      - ./django-api:/app/django-api
   django-api:
     build:
       context: django-api

@@ -247,6 +247,17 @@ class _ManagementAPI(object, metaclass=_BaseManagementAPIMetaClass):
         }
         return self.auth0.client_grants.create(body)
 
+    def all_resource_servers(self):
+        return self.auth0.resource_servers.get_all()
+
+    def create_resource_server(self, name, identifier, skip_consent_for_verifiable_first_party_clients=True):
+        body = {
+            "identifier": identifier,
+            "name": name,
+            "skip_consent_for_verifiable_first_party_clients": skip_consent_for_verifiable_first_party_clients,
+        }
+        return self.auth0.resource_servers.create(body)
+
 
 class ShouldHaveFoundAllApplicationsClientException(Exception):
     pass
