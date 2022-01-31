@@ -12,12 +12,12 @@ AUTH0_EMAIL_SMTP_USER = os.getenv("AUTH0_EMAIL_SMTP_USER")
 AUTH0_EMAIL_SMTP_PASSWORD = os.getenv("AUTH0_EMAIL_SMTP_PASSWORD")
 
 # Things related to business logic
-PRODUCT_A_NAME = os.getenv("PRODUCT_A_NAME")
+PRODUCT_A_NAME = os.getenv("PRODUCT_A_NAME", "Product A")
 # All the files will be available through a container volume
 PRODUCT_A_ENV_FILE = os.getenv("PRODUCT_A_ENV_FILE", "/app/product-a/.env.development")
-PRODUCT_B_NAME = os.getenv("PRODUCT_B_NAME")
+PRODUCT_B_NAME = os.getenv("PRODUCT_B_NAME", "Product B")
 PRODUCT_B_ENV_FILE = os.getenv("PRODUCT_B_ENV_FILE", "/app/product-b/.env.development")
-PRODUCT_C_NAME = os.getenv("PRODUCT_C_NAME")
+PRODUCT_C_NAME = os.getenv("PRODUCT_C_NAME", "Product C")
 PRODUCT_C_ENV_FILE = os.getenv("PRODUCT_C_ENV_FILE", "/app/product-c/.env.development")
-DJANGO_API_NAME = os.getenv("DJANGO_API_NAME")
+DJANGO_API_NAME = os.getenv("DJANGO_API_NAME", "Management - Orchestrate - Django API")
 DJANGO_API_ENV_FILE = os.getenv("DJANGO_API_ENV_FILE", "/app/django-api/.env.development")
