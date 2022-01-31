@@ -6,6 +6,7 @@ In this project, you'll find:
 - **product-a-regular-web-app**: A sample application that represents some sort of product written in Python using [Django as template engine](https://docs.djangoproject.com/en/4.0/topics/templates/).
 - **product-b-regular-web-app**: A sample application that represents some sort of product written in C# using [ASP.NET Core MVC](https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-6.0).
 - **product-c-single-page-app**: A sample application that represents some sort of product written in JavaScript using [Next.js](https://nextjs.org/).
+- **django-api**: API responsible for manage user properties. It's written in Python using Django and [DRF](https://www.django-rest-framework.org/).
 
 [The Authorization Code grant type](https://auth0.com/docs/authorization/flows/authorization-code-flow) is used by the products to authenticate the user.
 
@@ -44,7 +45,7 @@ Use `admin:admin` to access Django ADMIN!
 
 ## FAQ
 
-1. I want to use this project. The S3 part seems OK, but what do I need to do no Auth0?
+1. I want to use this project. The S3 part seems OK, but what do I need to do on Auth0?
 
 First you must create an application of type M2M and then grant access to certain scopes to the audience `YOUR_TENANT_NAME.us.auth0.com/api/v2/`. If you consult the endpoint [_Get client grants_](https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants) you should receive something like the following:
 
@@ -162,7 +163,7 @@ It's important that this user is only able to use AWS services through API, do n
 
 3. An env file is present in all sample product projects. Do I need to touch them for something?
 
-This is not required. [They will be automatically updated by the orchestrator](https://github.com/juntossomosmais/auth0-samples/blob/849323f03aeba2567c362529fd499f7f20535d30/orchestrator/orchestrator/main.py#L100-L108).
+This is not required. [They will be automatically updated by the orchestrator](https://github.com/juntossomosmais/auth0-samples/blob/5e42b109ba23460bf55c457f581a2df041955c4e/orchestrator/orchestrator/main.py#L149-L160).
 
 ## Important notice
 
