@@ -10,14 +10,13 @@ const Claims = () => {
   const { getIdTokenClaims } = useAuth0()
   const [claims, setClaims] = useState(null)
   // Hooks
-  const fetchMyAPI = useCallback(async () => {
+  const retrieveMyClaims = useCallback(async () => {
     const claims = await getIdTokenClaims()
     setClaims(claims)
   }, [])
-
   useEffect(() => {
-    fetchMyAPI()
-  }, [fetchMyAPI])
+    retrieveMyClaims()
+  }, [retrieveMyClaims])
 
   return (
     <Layout>

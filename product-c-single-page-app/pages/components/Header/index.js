@@ -18,8 +18,11 @@ const Header = () => {
     if (isAuthenticated) {
       return (
         <>
-          <Link href="/claims">
+          <Link href="/profile">
             <a className="me-3 py-2 text-dark text-decoration-none">Perfil</a>
+          </Link>
+          <Link href="/claims">
+            <a className="me-3 py-2 text-dark text-decoration-none">Claims</a>
           </Link>
           <a href="#" onClick={logoutHandler} className="me-3 py-2 text-dark text-decoration-none">
             Logout
