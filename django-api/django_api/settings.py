@@ -14,6 +14,7 @@ from django_api.support.django_helpers import getenv_or_raise_exception
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# TODO: Remove this
 load_dotenv(BASE_DIR.joinpath(".env.development"), verbose=True)
 
 
