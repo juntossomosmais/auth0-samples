@@ -53,11 +53,16 @@ def update_settings(file_location, client_details: ClientDetails):
         print(f"The following file does not exist to update setting: {file_location_path}")
 
 
-def retrieve_id_by_connection_name(connections, name):
+def retrieve_id_by_connection_name(connections, name, raise_exception_when_no_found=True):
     for connection in connections:
         if connection["name"] == name:
             return connection["id"]
-    raise UnexpectedBehaviorException
+    message = f"Could not find connection for {name}. Are you sure you did create it?"
+    if raise_exception_when_no_found:
+        raise UnexpectedBehaviorException(message)
+    else:
+        print(message)
+        return None
 
 
 def main():
@@ -191,11 +196,17 @@ def main():
         fields = ["id", "strategy", "name"]
         connections = management_api.retrieve_all_connection(fields=fields)
         google_connection_id = retrieve_id_by_connection_name(connections, google_connection)
-        facebook_connection_id = retrieve_id_by_connection_name(connections, facebook_connection)
-        passwordless_email_connection_id = retrieve_id_by_connection_name(connections, passwordless_email_connection)
+        facebook_connection_id = retrieve_id_by_connection_name(
+            connections, facebook_connection, raise_exception_when_no_found=False
+        )
+        passwordless_email_connection_id = retrieve_id_by_connection_name(
+            connections, passwordless_email_connection, raise_exception_when_no_found=False
+        )
         management_api.update_connection_with_clients(google_connection_id, enabled_clients)
-        management_api.update_connection_with_clients(facebook_connection_id, enabled_clients)
-        management_api.update_connection_with_clients(passwordless_email_connection_id, enabled_clients)
+        if facebook_connection_id:
+            management_api.update_connection_with_clients(facebook_connection_id, enabled_clients)
+        if passwordless_email_connection_id:
+            management_api.update_connection_with_clients(passwordless_email_connection_id, enabled_clients)
 
     # Update main connection if required to allow username usage
     fields = ["id", "name", "strategy"]
