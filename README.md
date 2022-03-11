@@ -22,6 +22,12 @@ First you must update the universal login that represents the sandbox tenant. To
 
     docker-compose build apply-classic-page && docker-compose up apply-classic-page
 
+Then you should access your Auth0 tenant to configure two manual steps:
+
+1 - In `Authentication > Social` create two `Social Connections`: google and facebook (it's required to select e-mail in User Data);
+
+2 - In `Branding > Universal Login` go to `Login` tab and click on `Customize Login Page` button.
+
 Then update all the `env.development` files in the products. Do this with the following command:
 
     docker-compose build update-settings && docker-compose up update-settings
