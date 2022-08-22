@@ -1,3 +1,4 @@
+import inspect
 import logging
 
 from dataclasses import dataclass
@@ -38,6 +39,11 @@ class OIDCConfigurationDocument:
     token_endpoint_auth_methods_supported: List[str]
     claims_supported: List[str]
     request_uri_parameter_supported: bool
+    request_parameter_supported: bool
+
+    @classmethod
+    def from_dict(cls, env):
+        return cls(**{k: v for k, v in env.items() if k in inspect.signature(cls).parameters})
 
 
 class JWTPublicKey(TypedDict):
@@ -139,7 +145,7 @@ class OIDCProvider:
         # }
 
         # First let's configure the OIDC configuration document
-        cls.oidc_configuration_document = OIDCConfigurationDocument(**document)
+        cls.oidc_configuration_document = OIDCConfigurationDocument.from_dict(document)
 
         # Now the public keys to verify the JWT created by Auth0
         public_keys = requests.get(cls.oidc_configuration_document.jwks_uri).json()
@@ -243,6 +249,7 @@ class OIDCProvider:
     def build_logout_url(cls, return_to):
         # https://auth0.com/docs/api/authentication#logout
         logout_endpoint = f"https://{cls.domain}/v2/logout"
+
         params = {
             "returnTo": return_to,
             "client_id": cls.app_client_key,
