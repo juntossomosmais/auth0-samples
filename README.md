@@ -16,27 +16,31 @@ So you can see how SSO (single sign-on) works. In addition, you can check out th
 
 ## Seeing them in action
 
-First you must update the universal login that represents the sandbox tenant. To do that you must issue the following:
+To start, please configure the following environment properties:
 
-> ⚠ It's worth mentioning that a build is required in case you have changed any project! That is why the samples below have it.
+- [custom-universal-login/.env.development](./custom-universal-login/.env.development)
+- [orchestrator/.env.development](./orchestrator/.env.development)
+
+Now you should update the universal login that represents the sandbox tenant. To do that you can issue the following:
+
+> ⚠ It's worth mentioning that a build is required in case you have changed any project. That is why the commands below have the build flag.
 
     docker-compose build apply-classic-page && docker-compose up apply-classic-page
 
 Then you should access your Auth0 tenant to configure two manual steps:
 
-1 - In `Authentication > Social` create two `Social Connections`: google and facebook (it's required to select e-mail in User Data);
+1. In `Authentication > Social` create two `Social Connections`: google and facebook (it's required to select e-mail in User Data);
+2. In `Branding > Universal Login` go to `Login` tab and click on `Customize Login Page` button.
 
-2 - In `Branding > Universal Login` go to `Login` tab and click on `Customize Login Page` button.
-
-Then update all the `env.development` files in the products. Do this with the following command:
+Then update all the `env.development` files in the products by executing the following command:
 
     docker-compose build update-settings && docker-compose up update-settings
 
-Now you can fire up the products including the API!
+Now you can run the products including the API:
 
     docker-compose build product-a product-b product-c django-api && docker-compose up product-a product-b product-c django-api 
 
-Then you can access them through the following addresses:
+You can access them through the following addresses:
 
 - Product A: http://app.local:8000
 - Product B: http://app.local:8001
@@ -99,7 +103,9 @@ Look at them very carefully, otherwise something may no work as expected.
 
 2. I'm receiving error from S3. How do I configure the policy?
 
-It's important that this user is only able to use AWS services through API, do not allow it log in on AWS Console. That said, about the policy, given you bucket name is `juntosid-idp-s3-sandbox`, you can use the one below:
+It can be many things. If you want something that's been tested and has proof of work, then use [this project](https://github.com/willianantunes/tutorials/blob/27f8ad444b21008c2b960ce922d75cf649225b5e/XXXX/universal-login-s3-terraform/README.md).
+
+If the issue concerns policy, given the bucket name is `juntosid-idp-s3-sandbox`, you can use the one below:
 
 ```json
 {
@@ -173,4 +179,4 @@ This is not required. [They will be automatically updated by the orchestrator](h
 
 ## Important notice
 
-You may not see all the projects here as this is still work in progress.
+You may not see all the projects working here as this is still a work in progress.
