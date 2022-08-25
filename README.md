@@ -177,6 +177,10 @@ If the issue concerns policy, given the bucket name is `juntosid-idp-s3-sandbox`
 
 This is not required. [They will be automatically updated by the orchestrator](https://github.com/juntossomosmais/auth0-samples/blob/5e42b109ba23460bf55c457f581a2df041955c4e/orchestrator/orchestrator/main.py#L149-L160).
 
+4. I'm using an Apple M1 chip and receiving weird errors such as `gyp ERR!` from `product-a`. What do I do?
+
+Sadly we're using images that don't support M1 architecture. So for this particular case, we recommend you run other products and leave the one that doesn't work aside.
+
 ## Important notice
 
 You may not see all the projects working here as this is still a work in progress.
