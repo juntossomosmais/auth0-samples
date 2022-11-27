@@ -21,7 +21,8 @@ def index(request):
         # Enriching output
         context["logout_uri"] = final_logout_uri
         user_id, email = logged_user["sub"], logged_user["email"]
-        should_retrieve_other_accounts_with_same_email = logged_user["email_verified"] == True
+        email_verified = logged_user.get("email_verified")
+        should_retrieve_other_accounts_with_same_email = email_verified and email_verified is True
         user_details = management_api.retrieve_user_details(user_id)
         suggested_users = None
         if should_retrieve_other_accounts_with_same_email:
