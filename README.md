@@ -16,10 +16,9 @@ So you can see how SSO (single sign-on) works. In addition, you can check out th
 
 ## Seeing them in action
 
-To start, please configure the following environment properties:
+To start, please configure the file [.env](./.env).
 
-- [custom-universal-login/.env.development](./custom-universal-login/.env.development)
-- [orchestrator/.env.development](./orchestrator/.env.development)
+> ⚠ You are not required to configure all properties in case you don't want the custom universa login.
 
 Now you should update the universal login that represents the sandbox tenant. To do that you can issue the following:
 
@@ -27,10 +26,9 @@ Now you should update the universal login that represents the sandbox tenant. To
 
     docker-compose build apply-classic-page && docker-compose up apply-classic-page
 
-Then you should access your Auth0 tenant to configure two manual steps:
+Then you should access your Auth0 tenant to configure 1 manual steps:
 
-1. In `Authentication > Social` create two `Social Connections`: google and facebook (it's required to select e-mail in User Data);
-2. In `Branding > Universal Login` go to `Login` tab and click on `Customize Login Page` button.
+- In `Branding > Universal Login > Advanced Options` go to the `Login` tab and click on `Customize Login Page` button.
 
 Then update all the `env.development` files in the products by executing the following command:
 
@@ -180,7 +178,3 @@ This is not required. [They will be automatically updated by the orchestrator](h
 4. I'm using an Apple M1 chip and receiving weird errors such as `gyp ERR!` from `product-a`. What do I do?
 
 Sadly we're using images that don't support M1 architecture. So for this particular case, we recommend you run other products and leave the one that doesn't work aside.
-
-## Important notice
-
-You may not see all the projects working here as this is still a work in progress.

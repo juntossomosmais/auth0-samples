@@ -2,6 +2,6 @@
 
 It does the following:
 
-- Retrieve 3 clients given a tenant.
-- If the clients are not available, it creates them.
-- Environment files are update with the 3 clients properties.
+- Configure your Auth0 Tenant following the configuration in the [platform](./platform) folder.
+- Retrieve all the persisted configuration through Auth0 Management API.
+- Update the environment files of all projects.

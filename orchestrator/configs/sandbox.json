@@ -1,0 +1,35 @@
+{
+  "AUTH0_DOMAIN": "YOUR_AUTH0_DOMAIN",
+  "AUTH0_CLIENT_ID": "YOUR_AUTH0_CLIENT_ID",
+  "AUTH0_CLIENT_SECRET": "YOUR_AUTH0_CLIENT_SECRET",
+  "AUTH0_ALLOW_DELETE": true,
+  "AUTH0_KEYWORD_REPLACE_MAPPINGS": {
+    "AUTH0_DOMAIN": "YOUR_AUTH0_DOMAIN",
+    "TENANT_NAME": "YOUR_TENANT_NAME",
+    "TENANT_PICTURE_URL": "https://avatars.githubusercontent.com/u/45012983?s=200&v=4",
+    "TENANT_SUPPORT_EMAIL": "iago@agrabah.disney.com",
+    "TENANT_SUPPORT_URL": "https://github.com/juntossomosmais/django-stomp",
+    "PRODUCT_A_CALLBACK_URLS": [
+      "http://app.local:8000/api/v1/response-oidc"
+    ],
+    "PRODUCT_A_LOGOUT_URLS": [
+      "http://app.local:8000/logout"
+    ],
+    "PRODUCT_B_CALLBACK_URLS": [
+      "http://app.local:8001/Account/Callback"
+    ],
+    "PRODUCT_B_LOGOUT_URLS": [
+      "http://app.local:8001/"
+    ],
+    "PRODUCT_C_URLS": [
+      "https://app.local:8002/"
+    ],
+    "SMTP_HOST": "smtp.mailtrap.io",
+    "SMTP_PORT": "2525",
+    "SMTP_USER": "YOUR_SMTP_USER",
+    "SMTP_PASS": "YOUR_SMTP_PASS"
+  }
+}
+
+
+

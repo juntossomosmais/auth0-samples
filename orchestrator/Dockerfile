@@ -1,13 +1,17 @@
-FROM python:3.9.7-slim
+FROM nikolaik/python-nodejs:python3.10-nodejs14-slim
 
 WORKDIR /app
 
+RUN pip install --no-cache-dir --upgrade pip pipenv
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
 COPY Pipfile Pipfile.lock ./
 
-RUN python -m pip install --upgrade pip pipenv
-
-RUN pipenv install --system --deploy --ignore-pipfile
+RUN pipenv install --system --deploy --dev --ignore-pipfile
 
 COPY . ./
 
-CMD [ "python", "manage.py" ]
+CMD ["./scripts/orchestrate.sh"]
