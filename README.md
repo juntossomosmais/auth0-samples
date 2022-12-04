@@ -1,6 +1,6 @@
-# Auth0 Samples
+# Auth0 Samples: Demystify all your doubts about how to integrate with Auth0 
 
-In this project, you'll find:
+In this repository, you'll find:
 
 - **custom-universal-login**: A project that has a custom universal login using [Auth0.js](https://github.com/auth0/auth0.js), React and [Parcel](https://parceljs.org/). You can easily change it to [Lock.js](https://github.com/auth0/lock) if required. This has nothing to do with New Universal Login, which uses Liquid as template engine. [Know the differences](https://auth0.com/docs/login/universal-login/new-universal-login-vs-classic-universal-login).
 - **product-a-regular-web-app**: A sample application that represents some sort of product written in Python using [Django as template engine](https://docs.djangoproject.com/en/4.0/topics/templates/).
@@ -14,13 +14,33 @@ In this project, you'll find:
 
 So you can see how SSO (single sign-on) works. In addition, you can check out the code and understand the logic behind the curtain.
 
-## Seeing them in action
+## Configuring the environment
 
-To start, please configure the file [.env](./.env).
+To run all the products, you are not required to configure the custom universal login, as the new universal login enables everything. The following section explains how to configure the custom universal login, which is optional, and then how to run the products.
 
-> ⚠ You are not required to configure all properties in case you don't want the custom universa login.
+### Optional: Custom Universal Login
 
-Now you should update the universal login that represents the sandbox tenant. To do that you can issue the following:
+The Custom Universal Login requires storage to upload its static files. However, only the HTTP files are uploaded to Auth0, and they reference the static files stored on AWS S3. 
+
+#### Creating the S3 bucket
+
+To create a properly configured S3 bucket, access the folder [custom-universal-login-s3-iac](./custom-universal-login-s3-iac) and set everything that starts with `YOUR_`. Then, execute the command:
+
+    terraform init
+
+Then you can apply it:
+
+    terraform apply
+
+You'll see this message when it ends:
+
+```
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+```
+
+#### Uploading the custom universal login
+
+Please configure all the variables available in[.env](./.env) file. To build and upload the front-end project, you can issue the following command:
 
 > ⚠ It's worth mentioning that a build is required in case you have changed any project. That is why the commands below have the build flag.
 
@@ -30,7 +50,9 @@ Then you should access your Auth0 tenant to configure 1 manual steps:
 
 - In `Branding > Universal Login > Advanced Options` go to the `Login` tab and click on `Customize Login Page` button.
 
-Then update all the `env.development` files in the products by executing the following command:
+### Required: Running the products A, B, C, and the API
+
+Please configure all the variables in the section `Auth0 Management API stuff` in the [.env](./.env) file. To configure all `env.development` files, execute the command:
 
     docker-compose build update-settings && docker-compose up update-settings
 
@@ -45,17 +67,17 @@ You can access them through the following addresses:
 - Product C: https://app.local:8002
 - Django API: https://app.local:8010/admin
 
-Use `admin:admin` to access Django ADMIN!
-
-## Why app.local instead of localhost?
-
-[To skip user consent](https://community.auth0.com/t/skip-user-consent-when-using-social-connection/18061) when doing authorization code grant type. You can test it using `localhost`, but you should understand it upfront from us.
+Use `admin:admin` to access the Django ADMIN!
 
 ## FAQ
 
-1. I want to use this project. The S3 part seems OK, but what do I need to do on Auth0?
+1. Why `app.local` instead of `localhost`?
 
-First you must create an application of type M2M and then grant access to certain scopes to the audience `YOUR_TENANT_NAME.us.auth0.com/api/v2/`. If you consult the endpoint [_Get client grants_](https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants) you should receive something like the following:
+[To skip user consent](https://community.auth0.com/t/skip-user-consent-when-using-social-connection/18061) when doing authorization code grant type. You can test it using `localhost`, but you should understand it upfront from us.
+
+2. I want to use this project. How do I configure the application required by Auth0 Deploy CLI?
+
+You must create an application of type M2M and then grant access to certain scopes to the audience `YOUR_TENANT_NAME.us.auth0.com/api/v2/`. If you consult the endpoint [_Get client grants_](https://auth0.com/docs/api/management/v2#!/Client_Grants/get_client_grants) you should see something like the following:
 
 ```json
 {
@@ -92,88 +114,9 @@ First you must create an application of type M2M and then grant access to certai
 }
 ```
 
-Then you should update the following env files:
-
-- [custom-universal-login/env.development](./custom-universal-login/.env.development)
-- [orchestrator/env.development](./orchestrator/.env.development)
-
-Look at them very carefully, otherwise something may no work as expected.
-
-2. I'm receiving error from S3. How do I configure the policy?
-
-It can be many things. If you want something that's been tested and has proof of work, then use [this project](https://github.com/willianantunes/tutorials/blob/27f8ad444b21008c2b960ce922d75cf649225b5e/XXXX/universal-login-s3-terraform/README.md).
-
-If the issue concerns policy, given the bucket name is `juntosid-idp-s3-sandbox`, you can use the one below:
-
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetBucketTagging",
-                "s3:DeleteObjectVersion",
-                "s3:GetObjectVersionTagging",
-                "s3:ListBucketVersions",
-                "s3:GetBucketLogging",
-                "s3:RestoreObject",
-                "s3:ListBucket",
-                "s3:GetBucketPolicy",
-                "s3:ReplicateObject",
-                "s3:GetObjectVersionTorrent",
-                "s3:GetObjectAcl",
-                "s3:GetBucketObjectLockConfiguration",
-                "s3:PutBucketTagging",
-                "s3:GetBucketRequestPayment",
-                "s3:GetObjectVersionAcl",
-                "s3:GetObjectTagging",
-                "s3:GetBucketOwnershipControls",
-                "s3:PutObjectTagging",
-                "s3:DeleteObject",
-                "s3:PutObjectAcl",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetBucketPolicyStatus",
-                "s3:ListBucketMultipartUploads",
-                "s3:GetObjectRetention",
-                "s3:GetBucketWebsite",
-                "s3:PutObjectLegalHold",
-                "s3:GetBucketVersioning",
-                "s3:PutBucketCORS",
-                "s3:GetBucketAcl",
-                "s3:GetObjectLegalHold",
-                "s3:GetBucketNotification",
-                "s3:PutObject",
-                "s3:GetObject",
-                "s3:ObjectOwnerOverrideToBucketOwner",
-                "s3:GetObjectTorrent",
-                "s3:PutObjectRetention",
-                "s3:PutObjectVersionAcl",
-                "s3:GetBucketCORS",
-                "s3:PutBucketObjectLockConfiguration",
-                "s3:GetObjectVersionForReplication",
-                "s3:GetBucketLocation",
-                "s3:GetObjectVersion"
-            ],
-            "Resource": [
-                "arn:aws:s3:::juntosid-idp-s3-sandbox/*",
-                "arn:aws:s3:::juntosid-idp-s3-sandbox"
-            ]
-        },
-        {
-            "Sid": "VisualEditor1",
-            "Effect": "Allow",
-            "Action": "s3:ListAllMyBuckets",
-            "Resource": "*"
-        }
-    ]
-}
-```
-
 3. An env file is present in all sample product projects. Do I need to touch them for something?
 
-This is not required. [They will be automatically updated by the orchestrator](https://github.com/juntossomosmais/auth0-samples/blob/5e42b109ba23460bf55c457f581a2df041955c4e/orchestrator/orchestrator/main.py#L149-L160).
+This is not required. [They will be automatically updated by the orchestrator](./orchestrator/scripts/env_setter.py).
 
 4. I'm using an Apple M1 chip and receiving weird errors such as `gyp ERR!` from `product-a`. What do I do?
 
