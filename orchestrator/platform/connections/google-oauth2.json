@@ -1,0 +1,48 @@
+{
+  "options": {
+    "email": true,
+    "gmail": false,
+    "orkut": false,
+    "scope": [
+      "email",
+      "profile"
+    ],
+    "sites": false,
+    "tasks": false,
+    "blogger": false,
+    "profile": true,
+    "youtube": false,
+    "calendar": false,
+    "contacts": false,
+    "analytics": false,
+    "client_id": "",
+    "moderator": false,
+    "coordinate": false,
+    "picasa_web": false,
+    "google_plus": false,
+    "google_books": false,
+    "google_drive": false,
+    "spreadsheets": false,
+    "document_list": false,
+    "latitude_best": false,
+    "latitude_city": false,
+    "url_shortener": false,
+    "webmaster_tools": false,
+    "chrome_web_store": false,
+    "allowed_audiences": "",
+    "adsense_management": false,
+    "google_drive_files": false,
+    "coordinate_readonly": false,
+    "google_cloud_storage": false,
+    "content_api_for_shopping": false,
+    "google_affiliate_network": false
+  },
+  "strategy": "google-oauth2",
+  "name": "google-oauth2",
+  "is_domain_connection": false,
+  "enabled_clients": [
+    "Product A",
+    "Product B",
+    "Product C"
+  ]
+}

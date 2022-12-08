@@ -5,18 +5,17 @@ services:
     build:
       context: ./custom-universal-login
       dockerfile: Dockerfile
-    env_file: custom-universal-login/.env.development
+    env_file: .env
   update-settings:
     build:
       context: ./orchestrator
       dockerfile: Dockerfile
-    env_file: orchestrator/.env.development
+    env_file: .env
     volumes:
-      # Will add more as soon as they're available
-      - ./product-a-regular-web-app:/app/product-a
-      - ./product-b-regular-web-app:/app/product-b
-      - ./product-c-single-page-app:/app/product-c
-      - ./django-api:/app/django-api
+      - ./product-a-regular-web-app:/app/envs/product-a
+      - ./product-b-regular-web-app:/app/envs/product-b
+      - ./product-c-single-page-app:/app/envs/product-c
+      - ./django-api:/app/envs/django-api
   django-api:
     build:
       context: django-api

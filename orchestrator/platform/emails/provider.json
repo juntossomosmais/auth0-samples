@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "credentials": {
+    "smtp_host": "##SMTP_HOST##",
+    "smtp_port": ##SMTP_PORT##,
+    "smtp_user": "##SMTP_USER##",
+    "smtp_pass": "##SMTP_PASS##"
+  },
+  "name": "smtp",
+  "default_from_address": "Jafar <jafar@agrabah.com>"
+}

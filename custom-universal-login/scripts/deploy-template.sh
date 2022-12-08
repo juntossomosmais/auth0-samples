@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# https://www.willianantunes.com/blog/2021/05/production-ready-shell-startup-scripts-the-set-builtin/
+# https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
 set -eu -o pipefail
 
 # Create out folder

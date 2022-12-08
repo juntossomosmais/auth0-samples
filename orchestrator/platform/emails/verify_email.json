@@ -1,0 +1,9 @@
+{
+  "syntax": "liquid",
+  "body": "./verify_email.html",
+  "from": "",
+  "subject": "",
+  "urlLifetimeInSeconds": 432000,
+  "template": "verify_email",
+  "enabled": false
+}

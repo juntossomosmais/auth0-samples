@@ -1,0 +1,8 @@
+{
+  "client_id": "Product A",
+  "audience": "https://antunes.us.auth0.com/api/v2/",
+  "scope": [
+    "read:users",
+    "update:users"
+  ]
+}

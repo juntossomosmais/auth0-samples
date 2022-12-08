@@ -23,14 +23,6 @@ class StaticFiles:
     js_map_file: Optional[pathlib.Path]
 
 
-def retrieve_bucket(s3_resource, bucket_name):
-    bucket = s3_resource.Bucket(bucket_name)
-    bucket_does_not_exist = not bucket.creation_date
-    if bucket_does_not_exist:
-        bucket.create()
-    return bucket
-
-
 def retrieve_buckets_cors(s3_resource, bucket_name):
     has_cors = False
     bucket_cors = s3_resource.BucketCors(bucket_name)
@@ -97,7 +89,7 @@ def main():
     )
     static_files = retrieve_static_files("out", "index.*")
     print(f"Configured static files: {static_files}")
-    bucket = retrieve_bucket(s3, settings.BUCKET_NAME)
+    bucket = s3.Bucket(settings.BUCKET_NAME)
 
     bucket_path = settings.BUCKET_ENVIRONMENT_PATH
     upload_file(bucket, str(static_files.css_file), f"{bucket_path}/{static_files.css_file.name}")
@@ -114,17 +106,19 @@ def main():
 
     bucket_cors, has_cors = retrieve_buckets_cors(s3, settings.BUCKET_NAME)
     print(f"Has any CORS been configured? {has_cors}")
-    cors_origins_allow_list = [origin for origin in settings.CORS_ALLOWED_ORIGINS.split(",")]
-    print(f"Applying CORS with the following ORIGINS: {cors_origins_allow_list}")
-    bucket_cors.put(
-        CORSConfiguration={
-            "CORSRules": [
-                {
-                    "AllowedMethods": ["GET"],
-                    "AllowedOrigins": cors_origins_allow_list,
-                    "ExposeHeaders": ["GET"],
-                    "MaxAgeSeconds": 3600,
-                },
-            ]
-        },
-    )
+    if settings.CORS_ALLOWED_ORIGINS:
+        print("It will break if you followed the Terraform project... Hope you know what you're doing")
+        cors_origins_allow_list = [origin for origin in settings.CORS_ALLOWED_ORIGINS.split(",")]
+        print(f"Applying CORS with the following ORIGINS: {cors_origins_allow_list}")
+        bucket_cors.put(
+            CORSConfiguration={
+                "CORSRules": [
+                    {
+                        "AllowedMethods": ["GET"],
+                        "AllowedOrigins": cors_origins_allow_list,
+                        "ExposeHeaders": ["GET"],
+                        "MaxAgeSeconds": 3600,
+                    },
+                ]
+            },
+        )
