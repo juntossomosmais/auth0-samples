@@ -1,0 +1,9 @@
+{
+  "syntax": "liquid",
+  "body": "./reset_email.liquid.html",
+  "from": "",
+  "subject": "Reset de senha",
+  "urlLifetimeInSeconds": 432000,
+  "template": "reset_email",
+  "enabled": true
+}

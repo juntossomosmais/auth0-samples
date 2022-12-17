@@ -1,0 +1,8 @@
+{
+  "syntax": "liquid",
+  "body": "./welcome_email.liquid.html",
+  "from": "",
+  "subject": "Seja muito bem-vindo!",
+  "template": "welcome_email",
+  "enabled": true
+}

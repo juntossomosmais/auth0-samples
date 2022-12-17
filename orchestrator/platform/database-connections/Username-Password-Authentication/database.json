@@ -4,6 +4,12 @@
       "active": true,
       "return_enroll_settings": true
     },
+    "validation": {
+      "username": {
+        "max": 11,
+        "min": 11
+      }
+    },
     "import_mode": false,
     "customScripts": {
       "change_password": "./change_password.js",
@@ -19,7 +25,7 @@
       "enable": false
     },
     "strategy_version": 2,
-    "requires_username": false,
+    "requires_username": true,
     "password_dictionary": {
       "enable": false,
       "dictionary": []

@@ -1,8 +1,0 @@
-{
-  "syntax": "liquid",
-  "body": "./welcome_email.html",
-  "from": "",
-  "subject": "Seja bem-vindo ao Portal do Investidor",
-  "template": "welcome_email",
-  "enabled": false
-}
