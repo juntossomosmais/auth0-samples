@@ -104,10 +104,10 @@ def main():
     management_api.update_login_page_classic(page_as_str)
     print("HTML file has been updated on Auth0")
 
-    bucket_cors, has_cors = retrieve_buckets_cors(s3, settings.BUCKET_NAME)
-    print(f"Has any CORS been configured? {has_cors}")
     if settings.CORS_ALLOWED_ORIGINS:
         print("It will break if you followed the Terraform project... Hope you know what you're doing")
+        bucket_cors, has_cors = retrieve_buckets_cors(s3, settings.BUCKET_NAME)
+        print(f"Has any CORS been configured? {has_cors}")
         cors_origins_allow_list = [origin for origin in settings.CORS_ALLOWED_ORIGINS.split(",")]
         print(f"Applying CORS with the following ORIGINS: {cors_origins_allow_list}")
         bucket_cors.put(
