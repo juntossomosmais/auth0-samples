@@ -26,11 +26,7 @@ export async function updateUserAttributes(accessToken, attributes) {
     },
   }
   options.url = `${process.env.NEXT_PUBLIC_USER_MANAGEMENT_ENDPOINT}/api/v1/users/attributes`
-  options.data = {
-    full_name: attributes.full_name,
-    given_name: attributes.given_name,
-    family_name: attributes.family_name,
-  }
+  options.data = attributes
   options.headers = { ...options.headers, ["Authorization"]: `Bearer ${accessToken}` }
 
   const response = await axios(options)

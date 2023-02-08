@@ -1,7 +1,6 @@
 import logging
 
 from datetime import date
-from typing import Optional
 from typing import TypedDict
 from typing import Union
 
@@ -36,12 +35,11 @@ def save_new_properties(user_id: str, user_attributes: UserAttributes):
         if birthday:
             user_metadata["birthday"] = birthday.isoformat()
     try:
-        # TODO: Add Fernet when saving in App or User metadata
         result = management_api.update_user(user_id, **user_attributes)
         _logger.debug("Result from Auth0: %s", result)
-        # TODO: Add AuditAction including IP Address
         AuditAction(user_id=user_id, action=save_new_properties.__name__, success=True).save()
     except Auth0Error as e:
+        # TODO: When an existing email is provided, you'll receive the error 400 followed by the message "The specified new email already exists"
         _logger.exception("%s could not save his attributes")
         extra_values = {"success": False, "motive": f"{e.status_code}: {e.message}"}
         AuditAction(user_id=user_id, action=save_new_properties.__name__, **extra_values).save()

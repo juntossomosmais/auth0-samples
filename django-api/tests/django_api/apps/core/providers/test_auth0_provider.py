@@ -2,6 +2,8 @@ import unittest
 
 from datetime import date
 
+from apps.core.providers.auth0_provider import resource_owner
+
 from django_api.apps.core.providers.auth0_provider import management_api
 
 
@@ -220,4 +222,32 @@ class ManagementAPITests(unittest.TestCase):
             "last_ip": "2804:14d:1a87:c8de:d982:7d20:62f6:cea3",
             "last_login": "2022-01-30T19:44:12.175Z",
             "logins_count": 6,
+        }
+
+
+class AuthenticationAPITests(unittest.TestCase):
+    @unittest.SkipTest
+    def test_resource_owner_when_password_is_wrong(self):
+        # Arrange
+        email = "willian.lima.antunes@gmail.com"
+        password = "WrongPassword"
+        # Act
+        response = resource_owner(email, password)
+        # Assert
+        assert response is None
+
+    @unittest.SkipTest
+    def test_resource_owner_when_password_is_right(self):
+        # Arrange
+        email = "willian.lima.antunes@gmail.com"
+        password = "YouRVeryCurious"
+        # Act
+        response = resource_owner(email, password)
+        # Assert
+        assert response == {
+            "access_token": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaXNzIjoiaHR0cHM6Ly9hbnR1bmVzLnVzLmF1dGgwLmNvbS8ifQ..EPGj9cKIFuNN-7Xi.uhgNKOmCHYjV7lzPb2BF8muGKQ-3EXARsftztmI5X1ZDlPP6rexgGMHkBhbROmvKniWY2R0ORuQ9wNRaCZLw1iiNO4AkzqDci4o621NIULJLRUJ6vsQdUZ2_POjSL-Io7gxzdznyeJeEcA739EaaSv6oA3-E-t0isJvKBABne-awLOST1xSygDPUTnhHiv45EEbkIcXCAFM-J88T5yk1XqXJIxO4s0dXniT50DXCBtDiBiLS94Fe-TsXJYH6zpVOxNx20S32y8cy_f0KgW9VWxmjFwQcACBJjS-2scyYuW8cTfyrU5KRJHROhmExnH1Kazlr9N1tBa3KW5noDuPqyH4T8_rrkbA.zrdIEtJFC5FYKGRKeJzrGg",
+            "id_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImZhWVp3X0NFSTBJUnotU2FHOWJoaSJ9.eyJuaWNrbmFtZSI6IndpbGxpYW4ubGltYS5hbnR1bmVzIiwibmFtZSI6IndpbGxpYW4ubGltYS5hbnR1bmVzQGdtYWlsLmNvbSIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci8zOGVjZmJjNTY3MTg1MzZjYTUxZmNhYWU3ZDdkYTliMz9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRndpLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDIzLTAyLTA4VDE4OjAxOjM4LjY0NloiLCJlbWFpbCI6IndpbGxpYW4ubGltYS5hbnR1bmVzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL2FudHVuZXMudXMuYXV0aDAuY29tLyIsImF1ZCI6IjRVdzE3ZU92NEE1NHM1dHJlNHl1bDR4ellaQnhVWXBHIiwiaWF0IjoxNjc1ODc5Mjk4LCJleHAiOjE2NzU5MTUyOTgsInN1YiI6ImF1dGgwfDYzYTBlNTY3ODU2YjhmMmRlZTFhODdmYiJ9.JkrOxJ9l8Iq9J193futituoClX_xdyxJTu_UEiXHk36gcMoSjxvPw5Klja56Yof8tu-TvskpMhk3YG63bAlPvhG3txJezyNT_WB2t13sLDbVhCdf41tYGdQpf4jzC-AF5dt9JvW_1zK4w5aKBlmAO3eDjaKYAvKw-uPY8Mn7Itx_vsPQRWQjLC7xiUI0mNmZ7D6zS_aJkoTMarIaFCMcBN8WlHKw2-m_3XOwNs256VBh3XO0VEL3XTmFPBehw9oV9VUBlzQWVm_Lk2x4x0OYh95yZu9P-y24LFXZ7Gy4XBiUh3Pcw_THKXT7mKOeuJ6hzPSjIxtjApO5rdvtwPMDzg",
+            "scope": "openid profile email address phone",
+            "expires_in": 86400,
+            "token_type": "Bearer",
         }

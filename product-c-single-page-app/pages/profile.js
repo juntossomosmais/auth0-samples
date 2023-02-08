@@ -11,7 +11,10 @@ const Claims = () => {
   // States
   const { getAccessTokenSilently } = useAuth0()
   const [accessToken, setAccessToken] = useState(null)
+  const [currentEmail, setCurrentEmail] = useState(null)
   const initialFormState = {
+    email: "",
+    password: "",
     full_name: "",
     given_name: "",
     family_name: "",
@@ -43,8 +46,14 @@ const Claims = () => {
       given_name: formState.given_name,
       family_name: formState.family_name,
     }
+    if (currentEmail !== formState.email) {
+      attributes.current_email = currentEmail
+      attributes.email = formState.email
+      attributes.password = formState.password
+    }
     const cleanedAttributes = removeEmptyKeys(attributes)
     try {
+      // TODO: Retrieve current user attributes when save to refresh the state `currentEmail`
       await updateUserAttributes(accessToken, cleanedAttributes)
       setFormState(prevState => ({
         ...prevState,
@@ -77,7 +86,9 @@ const Claims = () => {
         given_name: userAttributes.given_name,
         family_name: userAttributes.family_name,
         user_metadata: userAttributes.user_metadata,
+        email: userAttributes.email,
       }))
+      setCurrentEmail(userAttributes.email)
     }
     retrieveMyProperties()
   }, [getAccessTokenSilently])
@@ -98,6 +109,20 @@ const Claims = () => {
             onChange={handleChange}
             name="full_name"
             type="text"
+            disabled={formState.sending}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>E-mail</Form.Label>
+          <Form.Control value={formState.email} onChange={handleChange} name="email" type="text" disabled={formState.sending} />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Sua senha caso queira alterar seu e-mail</Form.Label>
+          <Form.Control
+            value={formState.password}
+            onChange={handleChange}
+            name="password"
+            type="password"
             disabled={formState.sending}
           />
         </Form.Group>

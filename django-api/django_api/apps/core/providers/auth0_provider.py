@@ -92,7 +92,14 @@ class _ManagementAPI(object, metaclass=_BaseManagementAPIMetaClass):
         return self.auth0.users.create(body)
 
     def update_user(
-        self, user_id, full_name=None, family_name=None, given_name=None, user_metadata=None, app_metadata=None
+        self,
+        user_id,
+        full_name=None,
+        family_name=None,
+        given_name=None,
+        user_metadata=None,
+        app_metadata=None,
+        email=None,
     ):
         body = {
             "name": full_name,
@@ -100,7 +107,11 @@ class _ManagementAPI(object, metaclass=_BaseManagementAPIMetaClass):
             "given_name": given_name,
             "user_metadata": user_metadata,
             "app_metadata": app_metadata,
+            "email": email,
         }
+        if email:
+            body["email_verified"] = False
+            body["verify_email"] = True
         body = clean_dict_with_falsy_or_strange_values(body)
         # TODO: Ensure that at least one of the optional parameters is provided
         # https://auth0-python.readthedocs.io/en/latest/v3.management.html#auth0.v3.management.users.Users.update
@@ -136,6 +147,20 @@ class ShouldHaveFoundAllApplicationsClientException(Exception):
 
 class InvalidProvidedArgumentException(Exception):
     pass
+
+
+def resource_owner(username_or_email, password):
+    other_params = {"scope": None, "realm": None, "grant_type": "password", "audience": None}
+    try:
+        return _get_token.login(
+            _non_interactive_client_id, _non_interactive_client_secret, username_or_email, password, **other_params
+        )
+    except Auth0Error as e:
+        _logger.warning("We received %s because of the following: %s", e.status_code, e.message)
+        if e.status_code == 403 and "wrong" in e.message.lower():
+            return
+        else:
+            raise e
 
 
 management_api = _ManagementAPI()
