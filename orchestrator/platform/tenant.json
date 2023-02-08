@@ -1,4 +1,6 @@
 {
+  "default_audience": "",
+  "default_directory": "Username-Password-Authentication",
   "enabled_locales": [
     "en"
   ],
