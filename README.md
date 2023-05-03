@@ -52,13 +52,13 @@ Then you should access your Auth0 tenant to configure 1 manual steps:
 
 ### Required: Running the products A, B, C, and the API
 
-Please configure all the variables in the section `Auth0 Management API stuff` in the [.env](./.env) file. To configure all `env.development` files, execute the command:
+Please configure all the variables in the section `Auth0 Management API stuff` in the [.env](./.env) file. It is also necessary to change the `YOUR_TENANT` string in other files like [file1](https://github.com/juntossomosmais/auth0-samples/blob/d4d019295952daa3d59dac942963319309649531/orchestrator/platform/grants/Management%20-%20Orchestrate%20-%20Django%20API%20(https---antunes.us.auth0.com-api-v2-).json) and [file2](https://github.com/juntossomosmais/auth0-samples/blob/d4d019295952daa3d59dac942963319309649531/orchestrator/platform/grants/Product%20A%20(https---antunes.us.auth0.com-api-v2-).json) to work correctly. To configure all `env.development` files, execute the command:
 
     docker-compose build update-settings && docker-compose up update-settings
 
 Now you can run the products including the API:
 
-    docker-compose build product-a product-b product-c django-api && docker-compose up product-a product-b product-c django-api 
+    docker-compose build product-a product-b product-c django-api && docker-compose up product-a product-b product-c django-api
 
 You can access them through the following addresses:
 
