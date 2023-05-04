@@ -1,8 +1,8 @@
 import logging
 
-from apps.core.api.api_exception import InvalidContractException
-from apps.core.api.api_exception import UnauthorizedException
-from apps.core.providers.auth0_provider import resource_owner
+from django_api.apps.core.api.api_exception import InvalidContractException
+from django_api.apps.core.api.api_exception import UnauthorizedException
+from django_api.apps.core.providers.auth0_provider import resource_owner
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
